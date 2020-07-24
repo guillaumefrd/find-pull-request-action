@@ -2017,23 +2017,27 @@ module.exports = require("os");
 const core = __webpack_require__(470)
 const { GitHub, context } = __webpack_require__(469)
 
+// documentation: https://docs.github.com/en/rest/reference/pulls#list-pull-requests
 const main = async () => {
-  const token = core.getInput('github-token')
-  const branch = core.getInput('branch')
+    const token = core.getInput('github-token')
 
-  const octokit = new GitHub(token)
+    const octokit = new GitHub(token)
 
-  const res = await octokit.pulls.list({
-    ...context.repo,
-    state: 'open',
-    head: `${context.repo.owner}:${branch}`
-  })
+    // get the list of closed PR
+    const res = await octokit.pulls.list({
+        ...context.repo,
+        state: 'closed',
+        head: `${context.repo.owner}`
+    })
 
-  const pr = res.data.length && res.data[0]
+    // take the first result in the list
+    const pr = res.data.length && res.data[0]
 
-  core.debug(`pr: ${JSON.stringify(pr, null, 2)}`)
-  core.setOutput('number', pr ? pr.number : '')
-  core.setOutput('head-sha', pr ? pr.head.sha : '')
+    core.debug(`pr: ${JSON.stringify(pr, null, 2)}`)
+    core.setOutput('number', pr ? pr.number : '')
+    core.setOutput('title', pr ? pr.title : '')
+    core.setOutput('url', pr ? pr.url : '')
+    core.setOutput('creator', pr ? pr.user.login : '')
 }
 
 main().catch(err => core.setFailed(err.message))
