@@ -2038,7 +2038,6 @@ const main = async () => {
     core.setOutput('title', pr ? pr.title : '')
     core.setOutput('url', pr ? pr.url : '')
     core.setOutput('creator', pr ? pr.user.login : '')
-    core.setOutput('assignee', pr ? pr.assignee.login : '')
 
 }
 
