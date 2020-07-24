@@ -2037,7 +2037,9 @@ const main = async () => {
     core.setOutput('number', pr ? pr.number : '')
     core.setOutput('title', pr ? pr.title : '')
     core.setOutput('url', pr ? pr.url : '')
-    core.setOutput('creator', pr ? pr.milestone.creator.login : '')
+    core.setOutput('creator', pr ? pr.user.login : '')
+    core.setOutput('assignee', pr ? pr.assignee.login : '')
+
 }
 
 main().catch(err => core.setFailed(err.message))
