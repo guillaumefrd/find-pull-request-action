@@ -2030,16 +2030,12 @@ const main = async () => {
         head: `${context.repo.owner}`
     })
 
-    core.debug(`res: ${JSON.stringify(res.data, null, 2)}`)
-
     // sort the list on "closed_at" to have the last closed first
     const res_sorted = res.data.sort(function(a,b){
         // Turn the strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
         return new Date(b.closed_at) - new Date(a.closed_at)
     })
-
-    core.debug(`res_sorted: ${JSON.stringify(res_sorted, null, 2)}`)
 
     // take the first result in the list
     const pr = res_sorted[0]
