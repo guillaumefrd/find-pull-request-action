@@ -2046,6 +2046,7 @@ const main = async () => {
     core.setOutput('url', pr ? pr.html_url : '')
     core.setOutput('creator', pr ? pr.user.login : '')
     core.setOutput('merged_at', pr ? pr.merged_at : '')
+    core.setOutput('description', pr ? pr.body : '')
 
 }
 
